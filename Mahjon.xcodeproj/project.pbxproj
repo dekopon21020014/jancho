@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CC0000000000000000000001 /* Sources/MahjonApp/MahjonApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000001 /* Sources/MahjonApp/MahjonApp.swift */; };
+		CC0000000000000000000002 /* Sources/MahjonApp/ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000002 /* Sources/MahjonApp/ContentView.swift */; };
+		CC0000000000000000000003 /* Sources/MahjonApp/CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000003 /* Sources/MahjonApp/CalculatorView.swift */; };
+		CC0000000000000000000004 /* Sources/MahjonApp/FuCalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000004 /* Sources/MahjonApp/FuCalculatorView.swift */; };
+		CC0000000000000000000005 /* Sources/MahjonApp/ScoreTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000005 /* Sources/MahjonApp/ScoreTableView.swift */; };
+		CC0000000000000000000007 /* Sources/MahjonApp/RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000006 /* Sources/MahjonApp/RecordsView.swift */; };
+		CC0000000000000000000008 /* Sources/MahjonApp/LiveGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000007 /* Sources/MahjonApp/LiveGameView.swift */; };
+		CC0000000000000000000009 /* Sources/MahjonApp/HandInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000008 /* Sources/MahjonApp/HandInputView.swift */; };
+		CC000000000000000000000A /* Sources/MahjonApp/TileArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0000000000000000000009 /* Sources/MahjonApp/TileArt.swift */; };
+		CC000000000000000000000B /* Sources/MahjonApp/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB000000000000000000000A /* Sources/MahjonApp/Assets.xcassets */; };
+		CC0000000000000000000006 /* MahjongScore in Frameworks */ = {isa = PBXBuildFile; productRef = DD0000000000000000000002 /* MahjongScore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AA0000000000000000000005 /* Mahjon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mahjon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB0000000000000000000001 /* Sources/MahjonApp/MahjonApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/MahjonApp.swift; sourceTree = "<group>"; };
+		BB0000000000000000000002 /* Sources/MahjonApp/ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/ContentView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000003 /* Sources/MahjonApp/CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/CalculatorView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000004 /* Sources/MahjonApp/FuCalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/FuCalculatorView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000005 /* Sources/MahjonApp/ScoreTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/ScoreTableView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000006 /* Sources/MahjonApp/RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/RecordsView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000007 /* Sources/MahjonApp/LiveGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/LiveGameView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000008 /* Sources/MahjonApp/HandInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/HandInputView.swift; sourceTree = "<group>"; };
+		BB0000000000000000000009 /* Sources/MahjonApp/TileArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sources/MahjonApp/TileArt.swift; sourceTree = "<group>"; };
+		BB000000000000000000000A /* Sources/MahjonApp/Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Sources/MahjonApp/Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AA000000000000000000000E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0000000000000000000006 /* MahjongScore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AA0000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000004 /* Mahjon */,
+				AA0000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AA0000000000000000000005 /* Mahjon.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA0000000000000000000004 /* Mahjon */ = {
+			isa = PBXGroup;
+			children = (
+				BB0000000000000000000001 /* Sources/MahjonApp/MahjonApp.swift */,
+				BB0000000000000000000002 /* Sources/MahjonApp/ContentView.swift */,
+				BB0000000000000000000003 /* Sources/MahjonApp/CalculatorView.swift */,
+				BB0000000000000000000004 /* Sources/MahjonApp/FuCalculatorView.swift */,
+				BB0000000000000000000005 /* Sources/MahjonApp/ScoreTableView.swift */,
+				BB0000000000000000000006 /* Sources/MahjonApp/RecordsView.swift */,
+				BB0000000000000000000007 /* Sources/MahjonApp/LiveGameView.swift */,
+				BB0000000000000000000008 /* Sources/MahjonApp/HandInputView.swift */,
+				BB0000000000000000000009 /* Sources/MahjonApp/TileArt.swift */,
+				BB000000000000000000000A /* Sources/MahjonApp/Assets.xcassets */,
+			);
+			name = Mahjon;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AA0000000000000000000009 /* Mahjon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA000000000000000000000A /* Build configuration list for PBXNativeTarget "Mahjon" */;
+			buildPhases = (
+				AA000000000000000000000D /* Sources */,
+				AA000000000000000000000E /* Frameworks */,
+				AA000000000000000000000F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mahjon;
+			packageProductDependencies = (
+				DD0000000000000000000002 /* MahjongScore */,
+			);
+			productName = Mahjon;
+			productReference = AA0000000000000000000005 /* Mahjon.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AA0000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					AA0000000000000000000009 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = AA0000000000000000000006 /* Build configuration list for PBXProject "Mahjon" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ja,
+			);
+			mainGroup = AA0000000000000000000002;
+			packageReferences = (
+				DD0000000000000000000001 /* XCLocalSwiftPackageReference "." */,
+			);
+			productRefGroup = AA0000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AA0000000000000000000009 /* Mahjon */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AA000000000000000000000F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC000000000000000000000B /* Sources/MahjonApp/Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AA000000000000000000000D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC0000000000000000000001 /* Sources/MahjonApp/MahjonApp.swift in Sources */,
+				CC0000000000000000000002 /* Sources/MahjonApp/ContentView.swift in Sources */,
+				CC0000000000000000000003 /* Sources/MahjonApp/CalculatorView.swift in Sources */,
+				CC0000000000000000000004 /* Sources/MahjonApp/FuCalculatorView.swift in Sources */,
+				CC0000000000000000000005 /* Sources/MahjonApp/ScoreTableView.swift in Sources */,
+				CC0000000000000000000007 /* Sources/MahjonApp/RecordsView.swift in Sources */,
+				CC0000000000000000000008 /* Sources/MahjonApp/LiveGameView.swift in Sources */,
+				CC0000000000000000000009 /* Sources/MahjonApp/HandInputView.swift in Sources */,
+				CC000000000000000000000A /* Sources/MahjonApp/TileArt.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AA0000000000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AA0000000000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		AA000000000000000000000B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T2QRG6H86G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "雀帳";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deko.mahjon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AA000000000000000000000C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = T2QRG6H86G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "雀帳";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deko.mahjon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA0000000000000000000006 /* Build configuration list for PBXProject "Mahjon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA0000000000000000000007 /* Debug */,
+				AA0000000000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA000000000000000000000A /* Build configuration list for PBXNativeTarget "Mahjon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA000000000000000000000B /* Debug */,
+				AA000000000000000000000C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		DD0000000000000000000001 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD0000000000000000000002 /* MahjongScore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD0000000000000000000001 /* XCLocalSwiftPackageReference "." */;
+			productName = MahjongScore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AA0000000000000000000001 /* Project object */;
+}
