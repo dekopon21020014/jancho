@@ -49,10 +49,31 @@ struct LiveGameState: Codable, Equatable {
     var kyoku: Int { handNumber % perRound + 1 }
     var roundLabel: String { "\(windName)\(kyoku)局" }
 
+    /// この局に打つ人数．四麻は4人，三麻は3人（参加人数が上限）．
+    /// 残りの参加者は抜け番（回し打ち）で，その局の点数のやり取りに参加しない
+    var playingCount: Int { min(players.count, isSanmaRules ? 3 : 4) }
+
+    /// 親から数えた席順（0=親）．抜け番判定に使う
+    func seatOffset(of index: Int) -> Int {
+        players.isEmpty ? 0 : (index - dealerIndex + players.count) % players.count
+    }
+
+    /// この局に打っているか（抜け番でないか）
+    func isPlaying(_ index: Int) -> Bool {
+        seatOffset(of: index) < playingCount
+    }
+
+    /// この局に打っている人のプレイヤー番号（親から席順）
+    var playingIndices: [Int] {
+        guard !players.isEmpty else { return [] }
+        return (0..<playingCount).map { (dealerIndex + $0) % players.count }
+    }
+
     func seatWind(of index: Int) -> String {
-        // 5人目以降の席には白・發・中を割り当てる
-        let offset = (index - dealerIndex + perRound) % perRound
-        return ["東", "南", "西", "北", "白", "發", "中"][offset]
+        // 打っている人の席風．四麻は東西南北，三麻は東西南まで．抜け番は「抜」
+        let offset = seatOffset(of: index)
+        guard offset < playingCount else { return "抜" }
+        return ["東", "南", "西", "北"][offset]
     }
 
     var leaderIndex: Int? {
@@ -163,6 +184,7 @@ struct LiveGameView: View {
                         player: game.players[index],
                         isDealer: index == game.dealerIndex,
                         seatWind: game.seatWind(of: index),
+                        isPlaying: game.isPlaying(index),
                         onRiichi: { toggleRiichi(index) },
                         onCorrect: { adjustScore(index, to: $0) }
                     )
@@ -392,9 +414,13 @@ struct LiveGameView: View {
         }
         .buttonStyle(.plain)
         .overlay(alignment: .topTrailing) {
-            riichiToggle(index: index, mini: game.perRound >= 5)
-                .padding(game.perRound >= 5 ? 5 : 8)
+            // 抜け番の人にはリーチトグルを出さない
+            if game.isPlaying(index) {
+                riichiToggle(index: index, mini: game.perRound >= 5)
+                    .padding(game.perRound >= 5 ? 5 : 8)
+            }
         }
+        .opacity(game.isPlaying(index) ? 1 : 0.55)
     }
 
     private var actionBar: some View {
@@ -452,21 +478,23 @@ struct LiveGameView: View {
 
     private func applyWin(_ declaration: WinDeclaration) {
         // あがり画面の供託項目を先に反映する（新規リーチは-1000，取り消しは+1000）
+        // 供託はこの局に打っている人だけが対象
+        let riichiPlayers = declaration.riichiPlayers.intersection(Set(game.playingIndices))
         for index in game.players.indices {
-            let declared = declaration.riichiPlayers.contains(index)
+            let declared = riichiPlayers.contains(index)
             if declared != game.players[index].isRiichi {
                 game.players[index].isRiichi = declared
                 game.players[index].score += declared ? -1000 : 1000
             }
         }
-        game.riichiSticks = declaration.riichiPlayers.count
+        game.riichiSticks = riichiPlayers.count
         let result = ScoreCalculator.calculate(ScoreInput(
             han: declaration.han, fu: declaration.fu,
             isDealer: declaration.winner == game.dealerIndex,
             winMethod: declaration.method,
             honba: game.honba, riichiSticks: game.riichiSticks,
             isChiitoitsu: declaration.chiitoitsu, yakumanCount: declaration.yakuman,
-            playerCount: game.players.count))
+            playerCount: game.playingCount))
         commit()
         switch declaration.method {
         case .ron:
@@ -474,7 +502,8 @@ struct LiveGameView: View {
                 game.players[discarder].score -= payment
             }
         case .tsumo:
-            for index in game.players.indices where index != declaration.winner {
+            // ツモの支払いはこの局に打っている人だけ
+            for index in game.playingIndices where index != declaration.winner {
                 let payment: Int
                 if declaration.winner == game.dealerIndex || index == game.dealerIndex {
                     payment = result.tsumoDealerPayment ?? 0
@@ -505,8 +534,8 @@ struct LiveGameView: View {
                 isDealer: nagashi == game.dealerIndex,
                 winMethod: .tsumo,
                 honba: game.honba, riichiSticks: 0,
-                playerCount: game.players.count))
-            for index in game.players.indices where index != nagashi {
+                playerCount: game.playingCount))
+            for index in game.playingIndices where index != nagashi {
                 let payment = nagashi == game.dealerIndex || index == game.dealerIndex
                     ? (result.tsumoDealerPayment ?? 0)
                     : (result.tsumoChildPayment ?? 0)
@@ -521,10 +550,10 @@ struct LiveGameView: View {
             save()
             return
         }
-        if tenpai.count > 0 && tenpai.count < game.players.count {
+        if tenpai.count > 0 && tenpai.count < game.playingCount {
             let gain = 3000 / tenpai.count
-            let loss = 3000 / (game.players.count - tenpai.count)
-            for index in game.players.indices {
+            let loss = 3000 / (game.playingCount - tenpai.count)
+            for index in game.playingIndices {
                 game.players[index].score += tenpai.contains(index) ? gain : -loss
             }
         }
@@ -545,6 +574,8 @@ struct LiveGameView: View {
     }
 
     private func toggleRiichi(_ index: Int) {
+        // 抜け番の人はリーチできない
+        guard game.isPlaying(index) else { return }
         if game.players[index].isRiichi {
             commit()
             game.players[index].isRiichi = false
@@ -663,7 +694,7 @@ struct LiveSetupView: View {
                                     returnScore = 40000
                                 }
                             }
-                            Text("人数とルールは別々に選べます（4人で三麻もできます）．ツモ損は3人対局のときだけです．")
+                            Text("人数とルールは別々に選べます（4人で三麻もできます）．打つのは四麻4人・三麻3人で，残りは抜け番（回し打ち）になります．")
                                 .font(.caption2)
                                 .foregroundStyle(Theme.subInk)
                             HStack(spacing: 8) {
@@ -804,17 +835,20 @@ struct PlayerActionView: View {
     let player: PlayerState
     let isDealer: Bool
     let seatWind: String
+    /// この局に打っているか．抜け番の人はリーチできない
+    let isPlaying: Bool
     var onRiichi: () -> Void
     var onCorrect: (Int) -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var correctedScore: Int
 
-    init(player: PlayerState, isDealer: Bool, seatWind: String,
+    init(player: PlayerState, isDealer: Bool, seatWind: String, isPlaying: Bool,
          onRiichi: @escaping () -> Void, onCorrect: @escaping (Int) -> Void) {
         self.player = player
         self.isDealer = isDealer
         self.seatWind = seatWind
+        self.isPlaying = isPlaying
         self.onRiichi = onRiichi
         self.onCorrect = onCorrect
         _correctedScore = State(initialValue: player.score)
@@ -877,8 +911,8 @@ struct PlayerActionView: View {
             }
         }
         .buttonStyle(.plain)
-        .disabled(!player.isRiichi && player.score < 1000)
-        .opacity(!player.isRiichi && player.score < 1000 ? 0.5 : 1)
+        .disabled(!isPlaying || (!player.isRiichi && player.score < 1000))
+        .opacity(!isPlaying || (!player.isRiichi && player.score < 1000) ? 0.5 : 1)
     }
 
     private var correctionCard: some View {
@@ -949,7 +983,7 @@ struct WinFlowView: View {
         self.game = game
         self.onConfirm = onConfirm
         _baseGame = State(initialValue: game)
-        _riichiPlayers = State(initialValue: Set(game.players.indices.filter { game.players[$0].isRiichi }))
+        _riichiPlayers = State(initialValue: Set(game.players.indices.filter { game.players[$0].isRiichi && game.isPlaying($0) }))
     }
 
     private let fuValues = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110]
@@ -978,7 +1012,7 @@ struct WinFlowView: View {
             winMethod: method,
             honba: baseGame.honba, riichiSticks: riichiPlayers.count,
             isChiitoitsu: activeChiitoitsu, yakumanCount: activeYakuman,
-            playerCount: baseGame.players.count))
+            playerCount: baseGame.playingCount))
     }
 
     private var breakdownText: String {
@@ -990,7 +1024,7 @@ struct WinFlowView: View {
             if winner == baseGame.dealerIndex, let each = result.tsumoDealerPayment {
                 parts.append("全員から \(each) 点ずつ")
             } else if let dealerPay = result.tsumoDealerPayment, let childPay = result.tsumoChildPayment {
-                parts.append(baseGame.players.count == 3
+                parts.append(baseGame.playingCount == 3
                     ? "親 \(dealerPay) 点 / 子 \(childPay) 点"
                     : "親 \(dealerPay) 点 / 子 \(childPay) 点ずつ")
             }
@@ -1096,7 +1130,7 @@ struct WinFlowView: View {
             TileCard {
                 VStack(alignment: .leading, spacing: 10) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 8)], alignment: .leading, spacing: 8) {
-                        ForEach(baseGame.players.indices, id: \.self) { index in
+                        ForEach(baseGame.playingIndices, id: \.self) { index in
                             Chip(
                                 title: "\(baseGame.seatWind(of: index)) \(baseGame.players[index].name)",
                                 selected: riichiPlayers.contains(index),
@@ -1313,7 +1347,7 @@ struct WinFlowView: View {
 
     private func playerChips(selected: Int?, exclude: Int?, action: @escaping (Int) -> Void) -> some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 8)], alignment: .leading, spacing: 8) {
-            ForEach(baseGame.players.indices, id: \.self) { index in
+            ForEach(baseGame.playingIndices, id: \.self) { index in
                 if index != exclude {
                     Chip(
                         title: "\(baseGame.seatWind(of: index)) \(baseGame.players[index].name)",
@@ -1479,7 +1513,7 @@ struct DrawFlowView: View {
             }
             return "\(name) の流し満貫：親 4,000 点／子 2,000 点（本場は1人 +100 点）．"
         }
-        let count = baseGame.players.count
+        let count = baseGame.playingCount
         if tenpai.count == 0 || tenpai.count == count {
             return "全員ノーテン（または全員テンパイ）のため，点数移動はありません．"
         }
@@ -1512,7 +1546,7 @@ struct DrawFlowView: View {
                                 FeltLabel(title: "テンパイは誰？", systemImage: "ear")
                             TileCard {
                                 VStack(spacing: 8) {
-                                    ForEach(baseGame.players.indices, id: \.self) { index in
+                                    ForEach(baseGame.playingIndices, id: \.self) { index in
                                         Chip(
                                             title: "\(baseGame.seatWind(of: index)) \(baseGame.players[index].name)",
                                             selected: tenpai.contains(index),
@@ -1535,7 +1569,7 @@ struct DrawFlowView: View {
                                     Chip(title: "なし", selected: nagashiWinner == nil, accent: Theme.gold) {
                                         nagashiWinner = nil
                                     }
-                                    ForEach(baseGame.players.indices, id: \.self) { index in
+                                    ForEach(baseGame.playingIndices, id: \.self) { index in
                                         Chip(
                                             title: "\(baseGame.seatWind(of: index)) \(baseGame.players[index].name)",
                                             selected: nagashiWinner == index,
